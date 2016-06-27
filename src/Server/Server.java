@@ -14,7 +14,7 @@ public class Server {
     static Vector LoginNames;
 
     Server() throws IOException{
-        ServerSocket server = new ServerSocket(5000);
+        ServerSocket server = new ServerSocket(50421);
         ClientSockets = new Vector();
         LoginNames = new Vector();
 
