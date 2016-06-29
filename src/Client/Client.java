@@ -2,25 +2,42 @@ package Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
 //Created with IntelliJ IDEA
 //Evgeny Smirnov
 
 public class Client extends JFrame implements Runnable {
+
+    Socket socket;
     JTextArea textArea;
     JTextField textField;
 
     Thread thread;
 
+    DataInputStream dataInputStream;
+    DataOutputStream dataOutputStream;
+
     String LoginName;
 
-    Client(String login) { //constructor
+    Client(String login) throws IOException { //constructor
         super(login);
         LoginName = login;
 
         textArea = new JTextArea(15, 30);
         textArea.setLineWrap(true);
         textArea.setEditable(false); //can't be edit
+
+        socket = new Socket("localhost", 4000);
+
+        dataInputStream = new DataInputStream(socket.getInputStream());
+        dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
+        dataOutputStream.writeUTF(LoginName);
+        dataOutputStream.writeUTF(LoginName + " " + "LOGIN");
 
         thread = new Thread(this);
         thread.start();
@@ -56,9 +73,16 @@ public class Client extends JFrame implements Runnable {
     }
 
     public void run() {
+        while (true){
+            try {
+                textArea.append("\n" + dataInputStream.readUTF());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public static void main(String[] args){
-        Client client = new Client("User");
+    public static void main(String[] args) throws IOException {
+        Client client = new Client("User2");
     }
 }

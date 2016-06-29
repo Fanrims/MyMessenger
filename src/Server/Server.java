@@ -11,7 +11,7 @@ public class Server {
     static Vector LoginNames;
 
     Server() throws IOException{
-        ServerSocket server = new ServerSocket(50421);
+        ServerSocket server = new ServerSocket(4000);
         ClientSockets = new Vector();
         LoginNames = new Vector();
 
@@ -34,9 +34,9 @@ public class Server {
             dataInputStream = new DataInputStream(ClientSocket.getInputStream());
             dataOutputStream = new DataOutputStream(ClientSocket.getOutputStream());
 
-            String Login = dataInputStream.readUTF();
+            String LoginName = dataInputStream.readUTF();
 
-            LoginNames.add(Login);
+            LoginNames.add(LoginName);
             ClientSockets.add(ClientSocket);
 
             start();
@@ -47,13 +47,14 @@ public class Server {
                 try {
                     String clientMessage = dataInputStream.readUTF();
                     StringTokenizer stringTokenizer = new StringTokenizer(clientMessage);
-                    String Login = stringTokenizer.nextToken();
+                    String LoginName = stringTokenizer.nextToken();
                     String messageType = stringTokenizer.nextToken();
                     int i;
-                    for (i = 0; i < LoginNames.size(); i++) ;
-                    Socket pSocket = (Socket) ClientSockets.elementAt(i);
-                    DataOutputStream pOut = new DataOutputStream(pSocket.getOutputStream());
-                    pOut.writeUTF(Login + " has logged in.");
+                    for(i = 0; i < LoginNames.size(); i++){
+                        Socket pSocket = (Socket) ClientSockets.elementAt(i);
+                        DataOutputStream pOut = new DataOutputStream(pSocket.getOutputStream());
+                        pOut.writeUTF(LoginName + " has logged in.");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
