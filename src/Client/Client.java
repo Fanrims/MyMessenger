@@ -35,10 +35,6 @@ public class Client extends JFrame implements Runnable {
         frame.setLocationRelativeTo(null);
         JPanel panel = new JPanel();
 
-        textArea = new JTextArea(15, 30);
-        textArea.setLineWrap(true);
-        textArea.setEditable(false); //can't be edit
-
         JScrollPane scroll_panel = new JScrollPane(textArea);
         scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll_panel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
