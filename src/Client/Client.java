@@ -2,8 +2,7 @@ package Client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -31,11 +30,49 @@ public class Client extends JFrame implements Runnable {
         super(login);
         LoginName = login;
 
+        addWindowListener(new WindowAdapter() { //exit
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    dataOutputStream.writeUTF(LoginName + " " + "LOGOUT");
+                    System.exit(1);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
         textArea = new JTextArea(15, 30);
         textArea.setLineWrap(true);
         textArea.setEditable(false); //can't be edit
 
         textField = new JTextField(20);
+        textField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    try {
+                        if(textField.getText().length()>0)
+                            dataOutputStream.writeUTF(LoginName + " " + "DATA " + textField.getText().toString());
+                        textField.setText("");
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
+        //create buttons
         send = new JButton("Send");
         logout = new JButton("Logout");
 
@@ -44,7 +81,8 @@ public class Client extends JFrame implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    dataOutputStream.writeUTF(LoginName + " " + "DATA " + textField.getText().toString());
+                    if(textField.getText().length()>0)
+                        dataOutputStream.writeUTF(LoginName + " " + "DATA " + textField.getText().toString());
                     textField.setText("");
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -90,6 +128,7 @@ public class Client extends JFrame implements Runnable {
         scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll_panel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        //add all our stuff to the interface
         panel.add(scroll_panel);
         panel.add(textField);
         panel.add(send);

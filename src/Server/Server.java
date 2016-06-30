@@ -68,7 +68,7 @@ public class Server {
                     else if (messageType.equals("LOGOUT")){
                         int i;
                         for(i = 0; i < LoginNames.size(); i++){
-                            if(LoginName == LoginNames.elementAt(i)){
+                            if(LoginName.equals(LoginNames.elementAt(i))){
                                 logout = i;
                             }
                             Socket pSocket = (Socket) ClientSockets.elementAt(i);
@@ -89,6 +89,10 @@ public class Server {
                             pOut.writeUTF(LoginName + ": " + message);
                         }
                     }
+                    if(messageType.equals("LOGOUT")){ //getting out of the circle
+                        break;
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
