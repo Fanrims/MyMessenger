@@ -39,6 +39,7 @@ public class Client extends JFrame implements Runnable {
         send = new JButton("Send");
         logout = new JButton("Logout");
 
+        //add button actions
         send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,9 +109,5 @@ public class Client extends JFrame implements Runnable {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        Client client = new Client("User");
     }
 }
