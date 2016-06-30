@@ -2,19 +2,23 @@ package Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-//Created with IntelliJ IDEA
-//Evgeny Smirnov
+/*Created with IntelliJ IDEA
+  Evgeny Smirnov*/
 
 public class Client extends JFrame implements Runnable {
 
     Socket socket;
     JTextArea textArea;
     JTextField textField;
+    JButton send;
+    JButton logout;
 
     Thread thread;
 
@@ -31,6 +35,34 @@ public class Client extends JFrame implements Runnable {
         textArea.setLineWrap(true);
         textArea.setEditable(false); //can't be edit
 
+        textField = new JTextField(20);
+        send = new JButton("Send");
+        logout = new JButton("Logout");
+
+        send.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    dataOutputStream.writeUTF(LoginName + " " + "DATA " + textField.getText().toString());
+                    textField.setText("");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+        logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    dataOutputStream.writeUTF(LoginName + " " + "LOGOUT");
+                    System.exit(1);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
         socket = new Socket("localhost", 4000);
 
         dataInputStream = new DataInputStream(socket.getInputStream());
@@ -45,6 +77,7 @@ public class Client extends JFrame implements Runnable {
     }
 
     private void setup() {
+        //interface
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("MyMessenger 1.0");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,20 +89,15 @@ public class Client extends JFrame implements Runnable {
         scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll_panel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        textField = new JTextField(20);
-        JButton send = new JButton("Send");
-        JButton update = new JButton("Update");
-
         panel.add(scroll_panel);
         panel.add(textField);
         panel.add(send);
-        panel.add(update);
+        panel.add(logout);
 
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         frame.setSize(400,340);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 
     public void run() {
@@ -83,6 +111,6 @@ public class Client extends JFrame implements Runnable {
     }
 
     public static void main(String[] args) throws IOException {
-        Client client = new Client("User2");
+        Client client = new Client("User");
     }
 }

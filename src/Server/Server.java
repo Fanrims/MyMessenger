@@ -49,11 +49,45 @@ public class Server {
                     StringTokenizer stringTokenizer = new StringTokenizer(clientMessage);
                     String LoginName = stringTokenizer.nextToken();
                     String messageType = stringTokenizer.nextToken();
-                    int i;
-                    for(i = 0; i < LoginNames.size(); i++){
-                        Socket pSocket = (Socket) ClientSockets.elementAt(i);
-                        DataOutputStream pOut = new DataOutputStream(pSocket.getOutputStream());
-                        pOut.writeUTF(LoginName + " has logged in.");
+                    int logout = -1;
+                    String message = "";
+
+                    while (stringTokenizer.hasMoreTokens()){
+                        message = message + " " + stringTokenizer.nextToken();
+                    }
+
+                    if (messageType.equals("LOGIN")){
+                        int i;
+                        for(i = 0; i < LoginNames.size(); i++){
+                            Socket pSocket = (Socket) ClientSockets.elementAt(i);
+                            DataOutputStream pOut = new DataOutputStream(pSocket.getOutputStream());
+                            pOut.writeUTF(LoginName + " has logged in.");
+                        }
+
+                    }
+                    else if (messageType.equals("LOGOUT")){
+                        int i;
+                        for(i = 0; i < LoginNames.size(); i++){
+                            if(LoginName == LoginNames.elementAt(i)){
+                                logout = i;
+                            }
+                            Socket pSocket = (Socket) ClientSockets.elementAt(i);
+                            DataOutputStream pOut = new DataOutputStream(pSocket.getOutputStream());
+                            pOut.writeUTF(LoginName + " has logged out.");
+                        }
+                        if(logout >= 0){
+                            LoginNames.removeElementAt(logout);
+                            ClientSockets.removeElementAt(logout);
+                        }
+
+                    }
+                    else {
+                        int i;
+                        for(i = 0; i < LoginNames.size(); i++){
+                            Socket pSocket = (Socket) ClientSockets.elementAt(i);
+                            DataOutputStream pOut = new DataOutputStream(pSocket.getOutputStream());
+                            pOut.writeUTF(LoginName + ": " + message);
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
