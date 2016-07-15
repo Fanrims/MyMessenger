@@ -116,7 +116,7 @@ public class Client extends JFrame implements Runnable {
     }
 
     private void setup() {
-        //interface
+        /*** interface ***/
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("MyMessenger 1.0");
         frame.setResizable(false);

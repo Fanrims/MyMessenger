@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Login {
     public static void main(String[] args){
-        //add interface
+        /*** interface***/
         final JFrame login = new JFrame("Log in");
         JPanel panel = new JPanel();
         final JTextField loginName = new JTextField(20);
