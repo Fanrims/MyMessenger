@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 public class Server {
-    static Vector ClientSockets;
-    static Vector LoginNames;
+    private static Vector ClientSockets;
+    private static Vector LoginNames;
 
     Server() throws IOException{
         ServerSocket server = new ServerSocket(4000);

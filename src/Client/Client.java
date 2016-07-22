@@ -13,18 +13,18 @@ import java.net.Socket;
 
 public class Client extends JFrame implements Runnable {
 
-    Socket socket;
-    JTextArea textArea;
-    JTextField textField;
-    JButton send;
-    JButton logout;
+    private Socket socket;
+    private JTextArea textArea;
+    private JTextField textField;
+    private JButton send;
+    private JButton logout;
 
-    Thread thread;
+    private Thread thread;
 
-    DataInputStream dataInputStream;
-    DataOutputStream dataOutputStream;
+    private DataInputStream dataInputStream;
+    private DataOutputStream dataOutputStream;
 
-    String LoginName;
+    private String LoginName;
 
     Client(String login) throws IOException { //constructor
         super(login);
@@ -137,7 +137,6 @@ public class Client extends JFrame implements Runnable {
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         frame.setSize(400,340);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void run() {
