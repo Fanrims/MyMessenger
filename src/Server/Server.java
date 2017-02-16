@@ -89,7 +89,7 @@ public class Server {
                             pOut.writeUTF(LoginName + ": " + message);
                         }
                     }
-                    if(messageType.equals("LOGOUT")){ //getting out of the circle
+                    if(messageType.equals("LOGOUT")){ //!getting out of the circle!
                         break;
                     }
 

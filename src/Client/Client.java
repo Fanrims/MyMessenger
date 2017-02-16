@@ -8,8 +8,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-/*Created with IntelliJ IDEA
-  Evgeny Smirnov*/
+/***
+ * Created with IntelliJ IDEA
+ * Evgeny Smirnov
+ ***/
 
 public class Client extends JFrame implements Runnable {
 
@@ -26,7 +28,8 @@ public class Client extends JFrame implements Runnable {
 
     private String LoginName;
 
-    Client(String login) throws IOException { //constructor
+    Client(String login) throws IOException {
+        /*** constructor ***/
         super(login);
         LoginName = login;
 

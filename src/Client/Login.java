@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Login {
     public static void main(String[] args){
-        /*** interface***/
+        /*** interface ***/
         final JFrame login = new JFrame("Log in");
         JPanel panel = new JPanel();
         final JTextField loginName = new JTextField(20);
@@ -17,12 +17,13 @@ public class Login {
 
         panel.add(loginName);
         panel.add(enter);
+        
         login.setSize(300, 100);
         login.add(panel);
         login.setVisible(true);
         login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //let's add action to the button
+        //lets add action to the button
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
