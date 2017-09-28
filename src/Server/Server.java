@@ -11,7 +11,7 @@ public class Server {
     private static Vector LoginNames;
 
     Server() throws IOException{
-        ServerSocket server = new ServerSocket(4000);
+        ServerSocket server = new ServerSocket(4000);  //found bug with port
         ClientSockets = new Vector();
         LoginNames = new Vector();
 
@@ -57,8 +57,7 @@ public class Server {
                     }
 
                     if (messageType.equals("LOGIN")){
-                        int i;
-                        for(i = 0; i < LoginNames.size(); i++){
+                        for(int i = 0; i < LoginNames.size(); i++){
                             Socket pSocket = (Socket) ClientSockets.elementAt(i);
                             DataOutputStream pOut = new DataOutputStream(pSocket.getOutputStream());
                             pOut.writeUTF(LoginName + " has logged in.");
@@ -66,8 +65,7 @@ public class Server {
 
                     }
                     else if (messageType.equals("LOGOUT")){
-                        int i;
-                        for(i = 0; i < LoginNames.size(); i++){
+                        for(int i = 0; i < LoginNames.size(); i++){
                             if(LoginName.equals(LoginNames.elementAt(i))){
                                 logout = i;
                             }
@@ -82,8 +80,7 @@ public class Server {
 
                     }
                     else {
-                        int i;
-                        for(i = 0; i < LoginNames.size(); i++){
+                        for(int i = 0; i < LoginNames.size(); i++){
                             Socket pSocket = (Socket) ClientSockets.elementAt(i);
                             DataOutputStream pOut = new DataOutputStream(pSocket.getOutputStream());
                             pOut.writeUTF(LoginName + ": " + message);
